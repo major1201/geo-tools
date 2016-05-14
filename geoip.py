@@ -4,6 +4,7 @@ import strings
 
 reader = None
 
+
 def load_data(filename, locale='en'):
     global reader
     reader = geoip2.database.Reader(filename, [locale])
@@ -27,22 +28,38 @@ class IPData(object):
     def __init__(self, response, locale):
         self._response = response
         if response is not None:
-            try: self.country_iso_code = strings.strip_to_empty(response.country.iso_code_)
-            except : pass
-            try: self.country_name = strings.strip_to_empty(response.country.names[locale])
-            except : pass
-            try: self.subdivision_iso_code = strings.strip_to_empty(response.subdivisions.most_specific.iso_code)
-            except : pass
-            try: self.subdivision_name = strings.strip_to_empty(response.subdivisions.most_specific.names[locale])
-            except : pass
-            try: self.city_name = strings.strip_to_empty(response.city.names[locale])
-            except : pass
-            try: self.postal_code = strings.strip_to_empty(response.postal.code)
-            except : pass
-            try: self.latitude = response.location.latitude
-            except : pass
-            try: self.longitude = response.location.longitude
-            except : pass
+            try:
+                self.country_iso_code = strings.strip_to_empty(response.country.iso_code_)
+            except:
+                pass
+            try:
+                self.country_name = strings.strip_to_empty(response.country.names[locale])
+            except:
+                pass
+            try:
+                self.subdivision_iso_code = strings.strip_to_empty(response.subdivisions.most_specific.iso_code)
+            except:
+                pass
+            try:
+                self.subdivision_name = strings.strip_to_empty(response.subdivisions.most_specific.names[locale])
+            except:
+                pass
+            try:
+                self.city_name = strings.strip_to_empty(response.city.names[locale])
+            except:
+                pass
+            try:
+                self.postal_code = strings.strip_to_empty(response.postal.code)
+            except:
+                pass
+            try:
+                self.latitude = response.location.latitude
+            except:
+                pass
+            try:
+                self.longitude = response.location.longitude
+            except:
+                pass
 
 
 def find(ip, locale='en'):

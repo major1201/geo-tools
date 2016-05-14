@@ -64,16 +64,16 @@ class Geo(object):
         parser.add_argument("-l", "--language", dest="language", default="en",
                             choices=["de", "en", "es", "fr", "ja", "pt-BR", "ru", "zh-CN"],
                             help="display language, default is english(en)\n"
-                                "* de -- German\n"
-                                "* en -- English names may still include accented characters if that\n"
-                                "  is the accepted spelling in English. In other words, English does\n"
-                                "  not mean ASCII.\n"
-                                "* es -- Spanish\n"
-                                "* fr -- French\n"
-                                "* ja -- Japanese\n"
-                                "* pt-BR -- Brazilian Portuguese\n"
-                                "* ru -- Russian\n"
-                                "* zh-CN -- Simplified Chinese.")
+                            "* de -- German\n"
+                            "* en -- English names may still include accented characters if that\n"
+                            "  is the accepted spelling in English. In other words, English does\n"
+                            "  not mean ASCII.\n"
+                            "* es -- Spanish\n"
+                            "* fr -- French\n"
+                            "* ja -- Japanese\n"
+                            "* pt-BR -- Brazilian Portuguese\n"
+                            "* ru -- Russian\n"
+                            "* zh-CN -- Simplified Chinese.")
         _args = parser.parse_args()
         assert isinstance(_args, argparse.Namespace)
         return _args
@@ -130,7 +130,8 @@ class Geo(object):
             try:
                 yield buf_in[:-1]
                 buf_in = sys.stdin.readline()
-            except IOError: pass
+            except IOError:
+                pass
 
     def start(self):
         if len(self._args.hosts) == 0:
