@@ -161,9 +161,6 @@ class Geo(object):
 
 
 if __name__ == "__main__":
-    reload(sys)
-    sys.setdefaultencoding("utf-8")
-
     try:
         with Geo() as geo:
             geo.start()
