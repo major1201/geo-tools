@@ -9,6 +9,10 @@ import geoip
 import strings
 
 
+def write(s):
+    sys.stdout.write(s.decode('utf-8') if geoip.PY2 else s)
+
+
 class Geo(object):
 
     LANGUAGE_PACK = {
@@ -82,12 +86,12 @@ class Geo(object):
         _data = geoip.find(ip, self._args.language)
         if self._args.detail:
             return "\n".join([
-                self.LANGUAGE_PACK[self._args.language][0] + ": " + str(_data.country_iso_code).encode("utf-8"),
-                self.LANGUAGE_PACK[self._args.language][1] + ": " + str(_data.country_name).encode("utf-8"),
-                self.LANGUAGE_PACK[self._args.language][2] + ": " + str(_data.subdivision_iso_code).encode("utf-8"),
-                self.LANGUAGE_PACK[self._args.language][3] + ": " + str(_data.subdivision_name).encode("utf-8"),
-                self.LANGUAGE_PACK[self._args.language][4] + ": " + str(_data.city_name).encode("utf-8"),
-                self.LANGUAGE_PACK[self._args.language][5] + ": " + str(_data.postal_code).encode("utf-8"),
+                self.LANGUAGE_PACK[self._args.language][0] + ": " + _data.country_iso_code,
+                self.LANGUAGE_PACK[self._args.language][1] + ": " + _data.country_name,
+                self.LANGUAGE_PACK[self._args.language][2] + ": " + _data.subdivision_iso_code,
+                self.LANGUAGE_PACK[self._args.language][3] + ": " + _data.subdivision_name,
+                self.LANGUAGE_PACK[self._args.language][4] + ": " + _data.city_name,
+                self.LANGUAGE_PACK[self._args.language][5] + ": " + _data.postal_code,
                 self.LANGUAGE_PACK[self._args.language][6] + ": " + str(_data.latitude),
                 self.LANGUAGE_PACK[self._args.language][7] + ": " + str(_data.longitude),
             ])
@@ -140,24 +144,24 @@ class Geo(object):
                 search = re.search(strings.REG_IP, line)
                 _format = self._args.format if self._args.format else '%C %s %c'
                 if search:
-                    sys.stdout.write(line + "\t" + self._format(search.group(0), _format))
+                    write(line + "\t" + self._format(search.group(0), _format))
                 else:
-                    sys.stdout.write(line)
-                sys.stdout.write("\n")
+                    write(line)
+                write("\n")
         else:
             if self._args.format:
                 try:
-                    sys.stdout.write(self._format(self._args.hosts[0], self._args.format))
+                    write(self._format(self._args.hosts[0], self._args.format))
                 except socket.gaierror:
                     sys.stderr.write("Can't resolve name: " + self._args.hosts[0])
             else:
                 for host in self._args.hosts:
                     if self._args.detail:
-                        sys.stdout.write("\n\n".join(self._get_output(host)))
-                        sys.stdout.write("\n")
+                        write("\n\n".join(self._get_output(host)))
+                        write("\n")
                     else:
-                        sys.stdout.write("\n".join(self._get_output(host)))
-                    sys.stdout.write("\n")
+                        write("\n".join(self._get_output(host)))
+                    write("\n")
 
 
 if __name__ == "__main__":

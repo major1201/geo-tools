@@ -1,8 +1,8 @@
 # encoding= utf-8
 import string
 
-
 REG_IP = "(([2][5][0-5]|[2][0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[0-9])[.]){3}([2][5][0-5]|[2][0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[0-9])"
+
 
 def is_none(s):
     return s is None
@@ -13,7 +13,7 @@ def is_not_none(s):
 
 
 def is_empty(s):
-    return is_none(s) or len(str(s)) == 0
+    return is_none(s) or len(s) == 0
 
 
 def is_not_empty(s):
@@ -23,10 +23,10 @@ def is_not_empty(s):
 def is_blank(s):
     if is_empty(s):
         return True
-    for char in s:
-        if char not in string.whitespace:
-            return False
-    return True
+    try:
+        return is_empty(s.strip(string.whitespace))
+    except:
+        return False
 
 
 def is_not_blank(s):
@@ -34,29 +34,19 @@ def is_not_blank(s):
 
 
 def strip_to_none(s):
-    if is_blank(s):
-        return None
-    else:
-        return s.strip()
+    return None if is_blank(s) else s.strip()
 
 
 def strip_to_empty(s):
-    if is_blank(s):
-        return ""
-    else:
-        return s.strip()
+    return "" if is_blank(s) else s.strip()
 
 
 def ltrim(s, replacement=" "):
-    if s.startswith(replacement):
-        return s[len(replacement):]
-    return s
+    return s[len(replacement):] if s.startswith(replacement) else s
 
 
 def rtrim(s, replacement=" "):
-    if s.endswith(replacement):
-        return s[:-len(replacement)]
-    return s
+    return s[:-len(replacement)] if s.endswith(replacement) else s
 
 
 def trim(s, replacement=" "):

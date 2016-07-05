@@ -69,7 +69,6 @@ $ python geo.py -h
 ## Requirements
 
 - geoip2 `pip install geoip2`
-- argparse `pip install argparse`
 
 ## License
 
