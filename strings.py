@@ -1,4 +1,5 @@
 # encoding= utf-8
+from __future__ import division, absolute_import, with_statement, print_function
 import string
 
 REG_IP = "(([2][5][0-5]|[2][0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[0-9])[.]){3}([2][5][0-5]|[2][0-4][0-9]|[1][0-9]{2}|[1-9][0-9]|[0-9])"
@@ -63,13 +64,16 @@ def to_json(o):
     from datetime import datetime
 
     class CJsonEncoder(json.JSONEncoder):
+        def __init__(self, **kwargs):
+            super(CJsonEncoder, self).__init__(**kwargs)
+
         def default(self, obj):
             if isinstance(obj, datetime):
                 return obj.strftime("%Y-%m-%d %H:%M:%S")
             elif isinstance(obj, date):
                 return obj.strftime("%Y-%m-%d")
             else:
-                return json.JSONEncoder.default(self, obj)
+                return super(CJsonEncoder, self).default(obj)
     return json.dumps(o, cls=CJsonEncoder, ensure_ascii=False)
 
 
